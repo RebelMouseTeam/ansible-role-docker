@@ -1,5 +1,4 @@
-# Cache objects
-packer_cache/
-
-# For built boxes
-*.box
+molecule/default/.molecule/
+molecule/default/.cache/
+*.pyc
+__pycache__

@@ -1,4 +1,16 @@
 ---
+- name: update apt-cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: install system dependencies
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - software-properties-common
+
 - name: add gpg key
   apt_key:
     url: https://download.docker.com/linux/ubuntu/gpg
@@ -8,6 +20,12 @@
   apt_repository:
     repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable
     state: present
+  register: docker_repo
+
+- name: update apt-cache
+  apt:
+    update_cache: yes
+  when: docker_repo | changed
 
 - name: install docker
   apt:
@@ -19,4 +37,5 @@
 - name: disable docker service
   service:
     name: docker
-    enabled: false
+    enabled: no
+  when: lookup('env', 'MOLECULE_DRIVER_NAME') != 'docker'
