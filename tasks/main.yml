@@ -10,6 +10,28 @@
       - apt-transport-https
       - ca-certificates
       - software-properties-common
+      - python-pip
+
+- name: update pip2
+  pip:
+    name: pip
+    state: present
+    version: 9.0.1
+    executable: pip2
+
+- name: update setuptools
+  pip:
+    name: setuptools
+    state: present
+    version: 38.5.1
+    executable: pip2
+
+- name: update wheel
+  pip:
+    name: wheel
+    state: present
+    version: 0.30.0
+    executable: pip2
 
 - name: add gpg key
   apt_key:
@@ -39,3 +61,9 @@
     name: docker
     enabled: no
   when: lookup('env', 'MOLECULE_DRIVER_NAME') != 'docker'
+
+- name: install docker-py
+  pip:
+    name: docker-py
+    state: present
+    executable: pip2
