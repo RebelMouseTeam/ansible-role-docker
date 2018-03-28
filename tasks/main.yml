@@ -16,21 +16,28 @@
   pip:
     name: pip
     state: present
-    version: 9.0.1
+    version: "{{ docker_pip_version }}"
     executable: pip2
 
 - name: update setuptools
   pip:
     name: setuptools
     state: present
-    version: 38.5.1
+    version: "{{ docker_setuptools_version }}"
     executable: pip2
 
 - name: update wheel
   pip:
     name: wheel
     state: present
-    version: 0.30.0
+    version: "{{ docker_wheel_version }}"
+    executable: pip2
+
+- name: install docker-py
+  pip:
+    name: docker-py
+    state: present
+    version: "{{ docker_py_version }}"
     executable: pip2
 
 - name: add gpg key
@@ -52,18 +59,13 @@
 - name: install docker
   apt:
     name:
-      - docker-ce
-      - docker-compose
+      - "docker-ce={{ docker_ce_version }}"
+      - "docker-compose={{ docker_compose_version }}"
     state: present
 
 - name: disable docker service
   service:
     name: docker
-    enabled: no
+    state: "{{ docker_service_state }}"
+    enabled: "{{ docker_service_enabled }}"
   when: lookup('env', 'MOLECULE_DRIVER_NAME') != 'docker'
-
-- name: install docker-py
-  pip:
-    name: docker-py
-    state: present
-    executable: pip2
