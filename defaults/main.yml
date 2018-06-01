@@ -1,7 +1,4 @@
 ---
-docker_pip_version: 9.0.1
-docker_setuptools_version: 38.5.1
-docker_wheel_version: 0.30.0
 docker_py_version: 1.9.0
 docker_ce_version: 18.03.0~ce-0~ubuntu
 docker_compose_version: 1.8.0-2~16.04.1

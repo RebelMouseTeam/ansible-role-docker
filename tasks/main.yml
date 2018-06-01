@@ -16,21 +16,18 @@
   pip:
     name: pip
     state: present
-    version: "{{ docker_pip_version }}"
     executable: pip2
 
 - name: update setuptools
   pip:
     name: setuptools
     state: present
-    version: "{{ docker_setuptools_version }}"
     executable: pip2
 
 - name: update wheel
   pip:
     name: wheel
     state: present
-    version: "{{ docker_wheel_version }}"
     executable: pip2
 
 - name: install docker-py
